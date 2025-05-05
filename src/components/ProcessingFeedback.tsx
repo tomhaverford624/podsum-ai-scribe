@@ -25,7 +25,7 @@ export const ProcessingFeedback: React.FC<ProcessingFeedbackProps> = ({
   onCancel,
 }) => {
   return (
-    <Card className="summary-card w-full max-w-2xl mx-auto mt-8 overflow-hidden">
+    <Card className="w-full max-w-2xl mx-auto mt-8 overflow-hidden border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300">
       <CardContent className="p-0">
         <div className="flex items-start p-4">
           <img 
@@ -34,16 +34,16 @@ export const ProcessingFeedback: React.FC<ProcessingFeedbackProps> = ({
             className="w-16 h-16 object-cover rounded-md"
           />
           <div className="ml-4 flex-1">
-            <h3 className="font-semibold text-base line-clamp-1">{podcastInfo.title}</h3>
+            <h3 className="font-medium text-base line-clamp-1">{podcastInfo.title}</h3>
             <p className="text-sm text-gray-500">{podcastInfo.duration}</p>
-            <div className="mt-2">
-              <Progress value={progress} className="h-2" />
-              <div className="flex justify-between items-center mt-1">
-                <p className="text-sm font-medium">{currentStep}</p>
+            <div className="mt-3">
+              <Progress value={progress} className="h-1.5 bg-gray-100" />
+              <div className="flex justify-between items-center mt-2">
+                <p className="text-sm font-medium text-alea-blue">{currentStep}</p>
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="text-gray-500 p-0 h-auto" 
+                  className="text-gray-500 p-0 h-auto hover:text-red-500" 
                   onClick={onCancel}
                 >
                   <X size={16} className="mr-1" />
