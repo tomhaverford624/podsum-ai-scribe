@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Play, Pause } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -95,21 +94,6 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
       transition={{ duration: 0.4 }}
       className="w-full max-w-4xl mx-auto mb-16 border border-[#1c212d] rounded-2xl overflow-hidden bg-secondary/10 shadow-lg"
     >
-      {/* Cover Banner */}
-      <div 
-        className="w-full h-[280px] relative"
-        style={{
-          backgroundImage: `url(${podcastInfo.thumbnail})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40 backdrop-blur-[2px]"></div>
-        <div className="absolute inset-0 flex items-center justify-center p-8">
-          <h1 className="text-white text-2xl md:text-3xl font-bold text-center">{podcastInfo.title}</h1>
-        </div>
-      </div>
-      
       {/* YouTube Player */}
       {videoId && <YoutubePlayer videoId={videoId} />}
       
