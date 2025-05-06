@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
-import { Share, Play, Pause, ExternalLink, Copy, Twitter } from 'lucide-react';
+import { Play, Pause, Copy, Twitter, Linkedin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 import { useToast } from '@/hooks/use-toast';
 import YoutubePlayer from './YoutubePlayer';
+import { Separator } from './ui/separator';
 
 interface TopicSection {
   title: string;
@@ -29,6 +30,8 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
 }) => {
   const { toast } = useToast();
   const [isPlaying, setIsPlaying] = useState(false);
+  const [playbackSpeed, setPlaybackSpeed] = useState<string>("1×");
+  const [showSpeedOptions, setShowSpeedOptions] = useState(false);
   
   // Mock timeline chapters for demonstration
   const chapters = [
@@ -40,6 +43,8 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
   ];
   
   const [activeChapter, setActiveChapter] = useState(0);
+  
+  const speedOptions = ["0.75×", "1×", "1.25×", "1.5×", "2×"];
   
   const handleShareClick = () => {
     toast({
@@ -69,6 +74,17 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
       duration: 2000,
     });
   };
+  
+  const handleSpeedChange = (speed: string) => {
+    setPlaybackSpeed(speed);
+    setShowSpeedOptions(false);
+    
+    toast({
+      title: "Playback speed",
+      description: `Speed changed to ${speed}`,
+      duration: 2000,
+    });
+  };
 
   const extractVideoId = (url?: string): string | undefined => {
     if (!url) return undefined;
@@ -85,11 +101,11 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="w-full max-w-4xl mx-auto mb-16 border border-border rounded-2xl overflow-hidden bg-secondary/20 shadow-lg"
+      className="w-full max-w-4xl mx-auto mb-16 border border-[#1c212d] rounded-2xl overflow-hidden bg-secondary/10 shadow-lg"
     >
       {/* Cover Banner */}
       <div 
-        className="w-full h-56 relative"
+        className="w-full h-[280px] relative"
         style={{
           backgroundImage: `url(${podcastInfo.thumbnail})`,
           backgroundSize: 'cover',
@@ -106,7 +122,7 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
       {videoId && <YoutubePlayer videoId={videoId} />}
       
       {/* Timeline chapters - Sticky bar */}
-      <div className="sticky top-[60px] z-10 bg-background/80 backdrop-blur-md px-4 py-4 border-y border-white/10">
+      <div className="sticky top-[60px] z-10 bg-background/95 backdrop-blur-md px-6 py-4 border-b border-white/10">
         <div className="flex items-center gap-4">
           <Button 
             variant="ghost" 
@@ -138,11 +154,37 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
             </div>
           </div>
           
+          {/* Playback Speed Control */}
+          <div className="relative">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="text-sm py-1 px-2 h-auto text-alea-blue hover:text-alea-blue/70 hover:bg-white/5 btn-press"
+              onClick={() => setShowSpeedOptions(!showSpeedOptions)}
+            >
+              {playbackSpeed}
+            </Button>
+            
+            {showSpeedOptions && (
+              <div className="absolute top-full mt-1 right-0 z-20 bg-background/95 backdrop-blur-md border border-white/10 rounded-md shadow-lg overflow-hidden">
+                {speedOptions.map((speed) => (
+                  <button
+                    key={speed}
+                    className={`block w-full text-left px-4 py-2 text-sm ${speed === playbackSpeed ? 'bg-white/10 text-alea-blue' : 'hover:bg-white/5 text-foreground/80'}`}
+                    onClick={() => handleSpeedChange(speed)}
+                  >
+                    {speed}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
               size="icon"
-              className="text-foreground/60 hover:text-foreground hover:bg-white/5 btn-press rounded-full"
+              className="text-alea-blue hover:text-alea-blue/70 hover:bg-white/5 btn-press rounded-full"
               onClick={handleShareClick}
               title="Copy link"
             >
@@ -153,7 +195,7 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
             <Button
               variant="ghost"
               size="icon"
-              className="text-foreground/60 hover:text-foreground hover:bg-white/5 btn-press rounded-full"
+              className="text-alea-blue hover:text-alea-blue/70 hover:bg-white/5 btn-press rounded-full"
               onClick={handleShareClick}
               title="Share on Twitter"
             >
@@ -164,22 +206,22 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
             <Button
               variant="ghost"
               size="icon"
-              className="text-foreground/60 hover:text-foreground hover:bg-white/5 btn-press rounded-full"
+              className="text-alea-blue hover:text-alea-blue/70 hover:bg-white/5 btn-press rounded-full"
               onClick={handleShareClick}
-              title="Share"
+              title="Share on LinkedIn"
             >
-              <ExternalLink size={16} />
-              <span className="sr-only">Share</span>
+              <Linkedin size={16} />
+              <span className="sr-only">Share on LinkedIn</span>
             </Button>
           </div>
         </div>
       </div>
       
-      {/* Content */}
+      {/* Content sections in continuous flow */}
       <div className="p-6 md:p-8">
         {/* Key Takeaways Section */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 text-foreground/90">Key takeaways</h2>
+          <h2 className="text-xl font-semibold mb-4 text-alea-blue">Key takeaways</h2>
           <ul className="space-y-4">
             {keyTakeaways.map((point, index) => (
               <motion.li 
@@ -199,29 +241,23 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
           </ul>
         </div>
         
-        {/* Topic Sections */}
-        {topicSections.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {topicSections.map((section, index) => (
-              <div 
-                key={index} 
-                className="p-4 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
-                onClick={() => {
-                  toast({
-                    title: section.title,
-                    description: "Section content would expand here in a modal",
-                    duration: 3000,
-                  });
-                }}
-              >
-                <h3 className="text-alea-blue font-medium mb-1">{section.title}</h3>
-                <p className="text-foreground/60 text-sm line-clamp-2">
-                  {section.content.replace(/\*\*(.*?)\*\*/g, '$1')}
-                </p>
-              </div>
-            ))}
+        {/* Separator between sections */}
+        <Separator className="my-8 bg-white/10" />
+        
+        {/* Topic Sections in linear layout */}
+        {topicSections.map((section, index) => (
+          <div key={index} className="mb-12">
+            <h2 className="text-xl font-semibold mb-4 text-alea-blue">{section.title}</h2>
+            <div className="prose prose-lg prose-invert max-w-none">
+              <p className="text-foreground/80 leading-relaxed">
+                {section.content.replace(/\*\*(.*?)\*\*/g, '$1')}
+              </p>
+            </div>
+            {index < topicSections.length - 1 && (
+              <Separator className="my-8 bg-white/10" />
+            )}
           </div>
-        )}
+        ))}
       </div>
     </motion.div>
   );
