@@ -2,30 +2,27 @@
 import React from 'react';
 import Logo from './Logo';
 import { Button } from './ui/button';
+import { RotateCw } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Moon, Sun } from 'lucide-react';
-import { useTheme } from '@/hooks/use-theme';
 
 export const Header: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+  const handleRefresh = () => {
+    window.location.reload();
+  };
   
   return (
-    <header className="w-full py-4 px-6 border-b border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm z-10 sticky top-0">
+    <header className="w-full py-3 px-6 border-b border-white/10 bg-transparent backdrop-blur-sm z-10 sticky top-0">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Logo />
         <div className="flex items-center space-x-1">
           <Button
             variant="ghost"
             size="icon"
-            aria-label="Toggle theme"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="rounded-full transition-all duration-300"
+            aria-label="Reload"
+            onClick={handleRefresh}
+            className="rounded-full text-foreground/70 hover:text-foreground/90 hover:bg-white/5"
           >
-            {theme === 'dark' ? (
-              <Sun className="h-5 w-5 text-yellow-300" />
-            ) : (
-              <Moon className="h-5 w-5 text-slate-700" />
-            )}
+            <RotateCw className="h-4 w-4" />
           </Button>
         </div>
       </div>

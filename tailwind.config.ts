@@ -26,7 +26,7 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#1677FF',
+					DEFAULT: '#2d6bff',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
@@ -64,12 +64,12 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				alea: {
-					blue: '#1677FF',
+					blue: '#2d6bff',
 					lightBlue: '#E6F7FF'
 				}
 			},
 			backgroundImage: {
-				'gradient-blue': 'linear-gradient(180deg, #E6F7FF 0%, #F0F8FF 100%)',
+				'gradient-blue': 'linear-gradient(180deg, #0b0f19 0%, #141925 100%)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -96,12 +96,17 @@ export default {
 				'pulse-slow': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.5' },
+				},
+				'button-press': {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(0.97)' },
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'pulse-slow': 'pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+				'button-press': 'button-press 120ms ease-in-out',
 			}
 		}
 	},

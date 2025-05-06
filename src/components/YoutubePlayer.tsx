@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Card } from './ui/card';
 
 interface YoutubePlayerProps {
   videoId: string;
@@ -8,7 +7,7 @@ interface YoutubePlayerProps {
 
 const YoutubePlayer: React.FC<YoutubePlayerProps> = ({ videoId }) => {
   return (
-    <Card className="w-full overflow-hidden border border-gray-100 dark:border-gray-800 mb-6">
+    <div className="w-full overflow-hidden rounded-xl mb-4">
       <div className="relative pb-[56.25%] h-0">
         <iframe 
           src={`https://www.youtube.com/embed/${videoId}?rel=0`}
@@ -18,7 +17,7 @@ const YoutubePlayer: React.FC<YoutubePlayerProps> = ({ videoId }) => {
           title="YouTube video player"
         />
       </div>
-    </Card>
+    </div>
   );
 };
 
