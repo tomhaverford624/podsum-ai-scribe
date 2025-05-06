@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Play, Pause, Copy, Twitter, Linkedin } from 'lucide-react';
+import { Play, Pause } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -45,14 +45,6 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
   const [activeChapter, setActiveChapter] = useState(0);
   
   const speedOptions = ["0.75×", "1×", "1.25×", "1.5×", "2×"];
-  
-  const handleShareClick = () => {
-    toast({
-      title: "Link copied",
-      description: "Summary link copied to clipboard",
-      duration: 2000,
-    });
-  };
   
   const togglePlayback = () => {
     setIsPlaying(!isPlaying);
@@ -178,41 +170,6 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
                 ))}
               </div>
             )}
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-alea-blue hover:text-alea-blue/70 hover:bg-white/5 btn-press rounded-full"
-              onClick={handleShareClick}
-              title="Copy link"
-            >
-              <Copy size={16} />
-              <span className="sr-only">Copy link</span>
-            </Button>
-            
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-alea-blue hover:text-alea-blue/70 hover:bg-white/5 btn-press rounded-full"
-              onClick={handleShareClick}
-              title="Share on Twitter"
-            >
-              <Twitter size={16} />
-              <span className="sr-only">Share on Twitter</span>
-            </Button>
-            
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-alea-blue hover:text-alea-blue/70 hover:bg-white/5 btn-press rounded-full"
-              onClick={handleShareClick}
-              title="Share on LinkedIn"
-            >
-              <Linkedin size={16} />
-              <span className="sr-only">Share on LinkedIn</span>
-            </Button>
           </div>
         </div>
       </div>
