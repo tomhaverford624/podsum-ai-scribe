@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import Header from '../components/Header';
 import EnhancedUrlInput from '../components/EnhancedUrlInput';
@@ -8,12 +7,10 @@ import HistoryList from '../components/HistoryList';
 import Footer from '../components/Footer';
 import { generateMockPodcastInfo, generateMockSummary, generateMockHistory } from '../utils/mockData';
 import { useToast } from "@/hooks/use-toast";
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const Index = () => {
   const { toast } = useToast();
-  const { scrollY } = useScroll();
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   
   const [url, setUrl] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -23,10 +20,10 @@ const Index = () => {
   const [summaryResult, setSummaryResult] = useState<any>(null);
   const [history, setHistory] = useState<any[]>([]);
   
-  // Demo URL for the "Try a demo link" button
+  // Demo URL
   const demoUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
   
-  // Advanced options - keeping these in state even though the UI is removed
+  // Advanced options
   const [summaryLength, setSummaryLength] = useState('medium');
   const [language, setLanguage] = useState('en');
   const [modelQuality, setModelQuality] = useState('standard');
@@ -101,7 +98,7 @@ const Index = () => {
       // Success toast
       toast({
         title: "Summary ready",
-        description: "Podcast has been analyzed and summarized.",
+        description: "Enjoy the highlights.",
       });
       
       // Scroll to summary
@@ -183,40 +180,30 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-500">
+    <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-1 px-4 py-8 overflow-x-hidden">
+      <main className="flex-1 px-4 py-8 md:px-6 overflow-x-hidden">
         <div className="max-w-7xl mx-auto">
+          {/* Hero Section */}
           <motion.div 
-            className="text-center mb-12 relative"
-            style={{ opacity: heroOpacity }}
+            className="text-center mb-12 md:mb-16"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
           >
-            <motion.div className="relative z-10">
-              <motion.h1 
-                className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-alea-blue to-blue-600"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-              >
-                Podcast Summarization
-              </motion.h1>
-              <motion.p 
-                className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                Get concise summaries with key insights and topic breakdown.
-              </motion.p>
-            </motion.div>
+            <h1 className="podcast-title mb-4">Podcast Summarizer</h1>
+            <p className="podcast-subtitle max-w-xl mx-auto">
+              Turn any episode into an executive brief in seconds.
+            </p>
           </motion.div>
           
+          {/* Input Section */}
           <motion.div 
-            className="flex justify-center mb-8"
-            initial={{ opacity: 0, scale: 0.95 }}
+            className="mb-12"
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           >
             <EnhancedUrlInput 
               onSubmit={handleSubmit} 
@@ -225,32 +212,23 @@ const Index = () => {
             />
           </motion.div>
           
-          {/* History section */}
-          <motion.div 
-            className="w-full max-w-5xl mx-auto mt-4 mb-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <HistoryList history={history} onSelect={handleSelectHistory} />
-          </motion.div>
-          
-          {isProcessing && podcastInfo && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <ProcessingFeedback
-                podcastInfo={podcastInfo}
-                progress={processingProgress}
-                currentStep={processingStep}
-                onCancel={handleCancelProcessing}
-              />
-            </motion.div>
-          )}
-          
-          <div ref={summaryRef}>
+          {/* Latest Summary Result */}
+          <div ref={summaryRef} className="mb-16">
+            {isProcessing && podcastInfo && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <ProcessingFeedback
+                  podcastInfo={podcastInfo}
+                  progress={processingProgress}
+                  currentStep={processingStep}
+                  onCancel={handleCancelProcessing}
+                />
+              </motion.div>
+            )}
+            
             {!isProcessing && summaryResult && (
               <SummaryResult
                 keyTakeaways={summaryResult.keyTakeaways}
@@ -259,6 +237,16 @@ const Index = () => {
               />
             )}
           </div>
+          
+          {/* History Section */}
+          <motion.div 
+            className="w-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <HistoryList history={history} onSelect={handleSelectHistory} />
+          </motion.div>
         </div>
       </main>
       

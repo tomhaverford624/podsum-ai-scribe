@@ -1,48 +1,38 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 223 21% 8%;
-    --foreground: 0 0% 90%;
+    --background: 223 21% 4%;
+    --foreground: 210 40% 98%;
 
-    --card: 223 21% 8%;
-    --card-foreground: 0 0% 90%;
+    --card: 223 21% 4%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 223 21% 8%;
-    --popover-foreground: 0 0% 90%;
+    --popover: 223 21% 4%;
+    --popover-foreground: 210 40% 98%;
 
     --primary: 217 100% 60%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 223 17% 14%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary-foreground: 210 40% 98%;
 
     --muted: 223 17% 14%;
-    --muted-foreground: 0 0% 70%;
+    --muted-foreground: 215 20% 65%;
 
     --accent: 223 17% 14%;
-    --accent-foreground: 0 0% 90%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 90%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 223 17% 14%;
+    --border: 223 15% 12%;
     --input: 223 17% 14%;
     --ring: 217 100% 60%;
 
     --radius: 1rem;
-
-    --sidebar-background: 223 21% 10%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 217 100% 60%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 223 17% 14%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 223 17% 14%;
-    --sidebar-ring: 217 100% 60%;
   }
 }
 
@@ -52,14 +42,24 @@
   }
 
   body {
-    @apply bg-[#0b0f19] text-foreground/90 min-h-screen;
+    @apply bg-[#0a0d14] text-[#d1d5db] min-h-screen;
+    letter-spacing: -0.01em;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-foreground tracking-tight;
+    letter-spacing: -0.02em;
+  }
+  
+  p {
+    line-height: 1.7;
   }
 }
 
 .logo-text {
   font-weight: bold;
   font-size: 1.5rem;
-  color: #2d6bff;
+  color: #3187ff;
 }
 
 .summary-card {
@@ -74,11 +74,12 @@
 }
 
 .card-lift {
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-lift:hover {
   transform: translateY(-4px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
 }
 
 .scrollbar-none {
@@ -91,7 +92,7 @@
 }
 
 .glass-btn {
-  @apply backdrop-blur-xl bg-white/10 hover:bg-white/15 border border-white/20 transition-all;
+  @apply backdrop-blur-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all;
 }
 
 .chapter-timeline {
@@ -127,4 +128,64 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+/* Updated spacing system */
+.spacing-y-s {
+  @apply py-6;
+}
+
+.spacing-y-m {
+  @apply py-8;
+}
+
+.spacing-y-l {
+  @apply py-12;
+}
+
+.spacing-x-s {
+  @apply px-6;
+}
+
+.spacing-x-m {
+  @apply px-8;
+}
+
+.spacing-x-l {
+  @apply px-12;
+}
+
+/* Updated motion effects */
+.btn-press {
+  transition: transform 120ms ease-in-out;
+}
+
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* For our horizontal carousel */
+.carousel-snap {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-snap > div {
+  scroll-snap-align: start;
+}
+
+.podcast-title {
+  @apply text-5xl md:text-6xl font-bold text-foreground;
+  letter-spacing: -0.04em;
+}
+
+.podcast-subtitle {
+  @apply text-lg md:text-xl text-foreground/80;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+
+.input-pill {
+  @apply flex items-center w-full max-w-3xl mx-auto rounded-full border border-white/10 bg-secondary/50 overflow-hidden transition-all;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }

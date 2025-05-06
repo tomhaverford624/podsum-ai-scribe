@@ -1,12 +1,9 @@
 
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from './ui/card';
-import { Separator } from './ui/separator';
-import { ListCheck, BookOpen, Share2, Play, Pause, Share } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Share, Play, Pause, ExternalLink, Copy, Twitter } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 import YoutubePlayer from './YoutubePlayer';
 
 interface TopicSection {
@@ -87,19 +84,19 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      layout
+      transition={{ duration: 0.4 }}
+      className="w-full max-w-4xl mx-auto mb-16 border border-border rounded-2xl overflow-hidden bg-secondary/20 shadow-lg"
     >
       {/* Cover Banner */}
       <div 
-        className="w-full h-48 relative mb-4 rounded-xl overflow-hidden"
+        className="w-full h-56 relative"
         style={{
           backgroundImage: `url(${podcastInfo.thumbnail})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40 backdrop-blur-[2px]"></div>
         <div className="absolute inset-0 flex items-center justify-center p-8">
           <h1 className="text-white text-2xl md:text-3xl font-bold text-center">{podcastInfo.title}</h1>
         </div>
@@ -109,18 +106,18 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
       {videoId && <YoutubePlayer videoId={videoId} />}
       
       {/* Timeline chapters - Sticky bar */}
-      <div className="sticky top-12 z-10 bg-[#0b0f19]/80 backdrop-blur-md px-4 py-3 rounded-lg mb-4 border border-white/10">
+      <div className="sticky top-[60px] z-10 bg-background/80 backdrop-blur-md px-4 py-4 border-y border-white/10">
         <div className="flex items-center gap-4">
           <Button 
             variant="ghost" 
             size="sm" 
-            className="text-sm text-foreground/80 hover:text-foreground flex items-center gap-2 hover:bg-white/5"
+            className="text-sm text-foreground/80 hover:text-foreground flex items-center gap-2 hover:bg-white/5 btn-press"
             onClick={togglePlayback}
           >
             {isPlaying ? (
-              <><Pause size={14} /> Pause</>
+              <><Pause size={16} /> <span>Pause summary</span></>
             ) : (
-              <><Play size={14} /> Play</>
+              <><Play size={16} /> <span>Play summary</span></>
             )}
           </Button>
           
@@ -133,6 +130,7 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
                   className={`chapter-marker ${index <= activeChapter ? 'active' : ''}`}
                   onClick={() => handleChapterClick(index)}
                   aria-label={`Jump to ${chapter.title} at ${chapter.time}`}
+                  title={`${chapter.title} - ${chapter.time}`}
                 >
                   <span className="sr-only">{chapter.title} - {chapter.time}</span>
                 </button>
@@ -140,69 +138,91 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
             </div>
           </div>
           
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-sm text-foreground/80 hover:text-foreground hover:bg-white/5"
-            onClick={handleShareClick}
-          >
-            <Share size={14} className="mr-2" />
-            Share
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-foreground/60 hover:text-foreground hover:bg-white/5 btn-press rounded-full"
+              onClick={handleShareClick}
+              title="Copy link"
+            >
+              <Copy size={16} />
+              <span className="sr-only">Copy link</span>
+            </Button>
+            
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-foreground/60 hover:text-foreground hover:bg-white/5 btn-press rounded-full"
+              onClick={handleShareClick}
+              title="Share on Twitter"
+            >
+              <Twitter size={16} />
+              <span className="sr-only">Share on Twitter</span>
+            </Button>
+            
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-foreground/60 hover:text-foreground hover:bg-white/5 btn-press rounded-full"
+              onClick={handleShareClick}
+              title="Share"
+            >
+              <ExternalLink size={16} />
+              <span className="sr-only">Share</span>
+            </Button>
+          </div>
         </div>
       </div>
       
       {/* Content */}
-      <Card className="border-0 bg-transparent shadow-none">
-        <CardContent className="space-y-6 pt-0 px-0">
-          <Accordion type="single" collapsible defaultValue="key-takeaways" className="w-full">
-            <AccordionItem value="key-takeaways" className="border-b border-white/10">
-              <AccordionTrigger className="py-4 text-lg font-medium text-foreground/90 hover:no-underline hover:text-foreground">
-                <div className="flex items-center">
-                  <ListCheck size={18} className="mr-2 text-alea-blue" />
-                  Key takeaways
-                </div>
-              </AccordionTrigger>
-              <AccordionContent className="text-foreground/70">
-                <ul className="space-y-4 py-2">
-                  {keyTakeaways.map((point, index) => (
-                    <motion.li 
-                      key={index} 
-                      className="pl-6 relative"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                    >
-                      <span className="absolute left-0 top-1 font-bold text-alea-blue">•</span>
-                      <span 
-                        className="text-foreground/70"
-                        dangerouslySetInnerHTML={{ __html: point.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
-                      />
-                    </motion.li>
-                  ))}
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-
-            {topicSections.map((section, index) => (
-              <AccordionItem key={index} value={`section-${index}`} className="border-b border-white/10">
-                <AccordionTrigger className="py-4 text-lg font-medium text-foreground/90 hover:no-underline hover:text-foreground">
-                  <div className="flex items-center">
-                    <BookOpen size={18} className="mr-2 text-alea-blue" />
-                    {section.title}
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="text-foreground/70">
-                  <div 
-                    className="leading-relaxed pl-6 py-2"
-                    dangerouslySetInnerHTML={{ __html: section.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
-                  />
-                </AccordionContent>
-              </AccordionItem>
+      <div className="p-6 md:p-8">
+        {/* Key Takeaways Section */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-4 text-foreground/90">Key takeaways</h2>
+          <ul className="space-y-4">
+            {keyTakeaways.map((point, index) => (
+              <motion.li 
+                key={index} 
+                className="pl-6 relative text-lg"
+                initial={{ opacity: 0, x: -5 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <span className="absolute left-0 top-1.5 text-alea-blue">•</span>
+                <span 
+                  className="text-foreground/80 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: point.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
+                />
+              </motion.li>
             ))}
-          </Accordion>
-        </CardContent>
-      </Card>
+          </ul>
+        </div>
+        
+        {/* Topic Sections */}
+        {topicSections.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {topicSections.map((section, index) => (
+              <div 
+                key={index} 
+                className="p-4 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                onClick={() => {
+                  toast({
+                    title: section.title,
+                    description: "Section content would expand here in a modal",
+                    duration: 3000,
+                  });
+                }}
+              >
+                <h3 className="text-alea-blue font-medium mb-1">{section.title}</h3>
+                <p className="text-foreground/60 text-sm line-clamp-2">
+                  {section.content.replace(/\*\*(.*?)\*\*/g, '$1')}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </motion.div>
   );
 };

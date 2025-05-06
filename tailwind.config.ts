@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -26,7 +25,7 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#2d6bff',
+					DEFAULT: '#3187ff',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
@@ -39,7 +38,7 @@ export default {
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
+					foreground: '#8b93a2'
 				},
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
@@ -64,12 +63,12 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				alea: {
-					blue: '#2d6bff',
+					blue: '#3187ff',
 					lightBlue: '#E6F7FF'
 				}
 			},
 			backgroundImage: {
-				'gradient-blue': 'linear-gradient(180deg, #0b0f19 0%, #141925 100%)',
+				'gradient-blue': 'linear-gradient(180deg, #0a0d14 0%, #0f1219 100%)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -97,6 +96,14 @@ export default {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.5' },
 				},
+				'fade-slide-down': {
+					'0%': { opacity: '0', transform: 'translateY(-10px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' },
+				},
+				'fade-slide-up': {
+					'0%': { opacity: '0', transform: 'translateY(10px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' },
+				},
 				'button-press': {
 					'0%, 100%': { transform: 'scale(1)' },
 					'50%': { transform: 'scale(0.97)' },
@@ -106,7 +113,27 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'pulse-slow': 'pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+				'fade-slide-down': 'fade-slide-down 0.15s ease-out',
+				'fade-slide-up': 'fade-slide-up 0.15s ease-out',
 				'button-press': 'button-press 120ms ease-in-out',
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						maxWidth: '65ch',
+						p: {
+							lineHeight: '1.7',
+						},
+						h1: {
+							letterSpacing: '-0.03em',
+							fontWeight: 700,
+						},
+						h2: {
+							letterSpacing: '-0.025em',
+							fontWeight: 700,
+						}
+					}
+				}
 			}
 		}
 	},

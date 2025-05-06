@@ -1,21 +1,15 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
 
 export const Footer: React.FC = () => {
   return (
-    <motion.footer 
-      className="w-full py-3 px-6 mt-auto border-t border-white/10 bg-transparent backdrop-blur-sm"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <footer className="w-full py-6 px-6 mt-16 border-t border-white/5 bg-transparent">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs">
         <div className="mb-2 md:mb-0 text-center md:text-left">
-          <p className="text-foreground/50">© {new Date().getFullYear()} Alea Research</p>
+          <p className="text-muted-foreground">© {new Date().getFullYear()} Alea Research</p>
         </div>
       </div>
-    </motion.footer>
+    </footer>
   );
 };
 

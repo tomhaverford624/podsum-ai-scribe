@@ -3,7 +3,6 @@ import React from 'react';
 import Logo from './Logo';
 import { Button } from './ui/button';
 import { RotateCw } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 export const Header: React.FC = () => {
   const handleRefresh = () => {
@@ -11,20 +10,18 @@ export const Header: React.FC = () => {
   };
   
   return (
-    <header className="w-full py-3 px-6 border-b border-white/10 bg-transparent backdrop-blur-sm z-10 sticky top-0">
+    <header className="w-full py-3 px-4 md:px-6 border-b border-border/40 bg-transparent backdrop-blur-sm z-10 sticky top-0">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Logo />
-        <div className="flex items-center space-x-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Reload"
-            onClick={handleRefresh}
-            className="rounded-full text-foreground/70 hover:text-foreground/90 hover:bg-white/5"
-          >
-            <RotateCw className="h-4 w-4" />
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Reload"
+          onClick={handleRefresh}
+          className="rounded-full text-foreground/70 hover:text-foreground/90 hover:bg-white/5 btn-press"
+        >
+          <RotateCw className="h-4 w-4" />
+        </Button>
       </div>
     </header>
   );

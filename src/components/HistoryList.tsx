@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Clock, Calendar, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { Clock, Calendar, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 
@@ -23,15 +23,15 @@ const HistoryList: React.FC<HistoryListProps> = ({ history, onSelect }) => {
   if (history.length === 0) {
     return (
       <motion.div 
-        className="border border-white/10 rounded-xl p-6 text-center bg-white/5 backdrop-blur-sm"
+        className="border border-border rounded-2xl p-8 text-center bg-secondary/20 backdrop-blur-sm"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4 }}
       >
-        <div className="flex flex-col items-center justify-center py-6">
-          <Clock size={24} className="text-foreground/30 mb-3" />
-          <h3 className="text-lg font-medium text-foreground/90">No summaries yet</h3>
-          <p className="text-sm text-foreground/70 mt-1">Paste a link to see the magic</p>
+        <div className="flex flex-col items-center justify-center py-8">
+          <Clock size={28} className="text-foreground/30 mb-4" />
+          <h3 className="text-xl font-medium text-foreground/90 mb-2">No summaries yet</h3>
+          <p className="text-base text-foreground/70">Paste a link to see the magic</p>
         </div>
       </motion.div>
     );
@@ -39,9 +39,9 @@ const HistoryList: React.FC<HistoryListProps> = ({ history, onSelect }) => {
 
   return (
     <div className="my-8">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-lg text-foreground/90 flex items-center">
-          <Clock size={18} className="mr-2 text-alea-blue" />
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="font-semibold text-xl text-foreground/90 flex items-center">
+          <Clock size={20} className="mr-2 text-alea-blue" />
           Recent summaries
         </h3>
       </div>
@@ -53,9 +53,9 @@ const HistoryList: React.FC<HistoryListProps> = ({ history, onSelect }) => {
         }}
         className="w-full relative group"
       >
-        <CarouselContent className="-ml-4 py-4">
+        <CarouselContent className="-ml-4 py-2">
           {history.map((item, index) => (
-            <CarouselItem key={item.id} className="pl-4 md:basis-1/3 lg:basis-1/4">
+            <CarouselItem key={item.id} className="pl-4 md:basis-1/2 lg:basis-1/4">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -69,7 +69,7 @@ const HistoryList: React.FC<HistoryListProps> = ({ history, onSelect }) => {
               >
                 <button
                   onClick={() => onSelect(item.id)}
-                  className="w-full text-left transition-all flex flex-col group relative rounded-xl overflow-hidden shadow-md hover:shadow-lg border border-white/10 aspect-square bg-white/5"
+                  className="w-full text-left transition-all flex flex-col group relative rounded-2xl overflow-hidden shadow-md hover:shadow-lg border border-white/10 aspect-square bg-secondary/20"
                 >
                   {item.thumbnail && (
                     <div className="w-full h-full overflow-hidden relative">
@@ -78,17 +78,17 @@ const HistoryList: React.FC<HistoryListProps> = ({ history, onSelect }) => {
                         alt={item.title}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
                       
                       {/* Play icon on hover */}
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        <div className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center">
-                          <Play className="h-5 w-5 text-white" />
+                        <div className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center">
+                          <Play className="h-6 w-6 text-white" />
                         </div>
                       </div>
                       
                       <div className="absolute bottom-0 left-0 right-0 p-4">
-                        <h4 className="font-medium text-white line-clamp-2 text-sm md:text-base mb-1">
+                        <h4 className="font-medium text-white line-clamp-2 text-base mb-2">
                           {item.title}
                         </h4>
                         <div className="flex items-center">

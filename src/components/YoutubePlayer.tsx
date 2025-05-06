@@ -7,8 +7,8 @@ interface YoutubePlayerProps {
 
 const YoutubePlayer: React.FC<YoutubePlayerProps> = ({ videoId }) => {
   return (
-    <div className="w-full overflow-hidden rounded-xl mb-4">
-      <div className="relative pb-[56.25%] h-0">
+    <div className="w-full overflow-hidden rounded-xl mb-6">
+      <div className="relative pb-[56.25%] h-0 bg-black/20">
         <iframe 
           src={`https://www.youtube.com/embed/${videoId}?rel=0`}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
