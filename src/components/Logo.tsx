@@ -6,13 +6,13 @@ export const Logo: React.FC = () => {
   return (
     <Link to="/" className="flex items-center group">
       <div className="flex items-center">
-        <svg width="36" height="28" viewBox="0 0 40 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-300 group-hover:scale-105">
+        <svg width="36" height="28" viewBox="0 0 40 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-300 group-hover:translate-x-1">
           <path d="M18.923 2.083L1.923 30.083H6.641L23.641 2.083H18.923Z" fill="#1677FF" />
           <path d="M33.923 2.083L27.923 12.083L25.513 8.083L30.795 0.083L38.641 0.083L23.641 24.083L18.923 24.083L28.833 8.083L33.923 2.083Z" fill="#1677FF" />
         </svg>
         <div className="ml-2">
-          <div className="font-bold text-alea-blue text-xl tracking-wide">Alea</div>
-          <div className="uppercase text-[10px] tracking-wider text-alea-blue/80">RESEARCH</div>
+          <div className="font-bold text-alea-blue dark:text-blue-400 text-xl tracking-wide transition-colors">Alea</div>
+          <div className="uppercase text-[10px] tracking-wider text-alea-blue/80 dark:text-blue-400/80 transition-colors">RESEARCH</div>
         </div>
       </div>
     </Link>
