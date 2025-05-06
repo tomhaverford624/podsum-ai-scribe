@@ -109,7 +109,7 @@ export const EnhancedUrlInput: React.FC<EnhancedUrlInputProps> = ({
             <input
               ref={inputRef}
               type="url"
-              placeholder="Drop or paste a link... we'll handle the rest"
+              placeholder="Paste a podcast link to summarize"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               onPaste={handlePaste}

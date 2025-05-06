@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Clock, Calendar, ListMusic, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Separator } from './ui/separator';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 
 interface HistoryItem {
@@ -63,8 +62,7 @@ const HistoryList: React.FC<HistoryListProps> = ({ history, onSelect }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
                 whileHover={{ 
-                  scale: 1.03, 
-                  rotate: index % 2 === 0 ? 1 : -1, 
+                  scale: 1.05,
                   transition: { duration: 0.2 } 
                 }}
                 onHoverStart={() => setHoveredCardId(item.id)}
@@ -72,57 +70,38 @@ const HistoryList: React.FC<HistoryListProps> = ({ history, onSelect }) => {
               >
                 <button
                   onClick={() => onSelect(item.id)}
-                  className="w-full text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-all flex flex-col group bg-white dark:bg-gray-900 rounded-[16px] overflow-hidden shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 relative"
-                  style={{
-                    transform: "perspective(1000px)",
-                    transformStyle: "preserve-3d",
-                  }}
+                  className="w-full text-left transition-all flex flex-col group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 aspect-square"
                 >
                   {item.thumbnail && (
-                    <div className="relative w-full h-32 overflow-hidden">
-                      <motion.img
+                    <div className="w-full h-full overflow-hidden">
+                      <img
                         src={item.thumbnail}
                         alt={item.title}
-                        className={`w-full h-full object-cover transition-all duration-300 ${
-                          hoveredCardId === item.id ? 'scale-110 blur-[2px]' : 'scale-100'
-                        }`}
+                        className="w-full h-full object-cover transition-all duration-300"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                       
-                      {hoveredCardId === item.id && item.previewText && (
-                        <motion.div 
-                          className="absolute inset-0 flex items-center justify-center p-4"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <p className="text-white text-sm text-center font-medium backdrop-blur-sm bg-black/20 p-2 rounded">
-                            Key takeaway: {item.previewText || "Institutional investors are piling in"}
-                          </p>
-                        </motion.div>
-                      )}
-                    </div>
-                  )}
-                  <div className="p-4 flex-1 flex flex-col justify-between">
-                    <div>
-                      <h4 className="font-medium text-sm line-clamp-2 group-hover:text-alea-blue dark:group-hover:text-blue-400 transition-colors mb-2">
-                        {item.title}
-                      </h4>
-                      <div className="flex items-center">
-                        <Calendar size={12} className="text-gray-400 mr-1" />
-                        <p className="text-xs text-gray-500">{item.date}</p>
+                      <div className="absolute bottom-0 left-0 right-0 p-4">
+                        <h4 className="font-semibold text-white line-clamp-2 text-sm md:text-base mb-1">
+                          {item.title}
+                        </h4>
+                        <div className="flex items-center">
+                          <Calendar size={12} className="text-gray-300 mr-1" />
+                          <p className="text-xs text-gray-300">{item.date}</p>
+                        </div>
+                        
+                        <div className="mt-3 flex justify-end">
+                          <motion.span 
+                            className="text-white p-1 rounded-full border border-white/30 group-hover:bg-white/10 transition-colors"
+                            whileHover={{ scale: 1.2 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                          >
+                            <ArrowRight size={14} />
+                          </motion.span>
+                        </div>
                       </div>
                     </div>
-                    <div className="mt-3 flex justify-end">
-                      <motion.span 
-                        className="text-alea-blue dark:text-blue-400 p-1 rounded-full border border-alea-blue/30 dark:border-blue-400/30 group-hover:bg-alea-blue/10 dark:group-hover:bg-blue-400/10 transition-colors"
-                        whileHover={{ scale: 1.2, rotate: 10 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                      >
-                        <ArrowRight size={14} />
-                      </motion.span>
-                    </div>
-                  </div>
+                  )}
                 </button>
               </motion.div>
             </CarouselItem>

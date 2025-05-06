@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+
+import React, { useState, useRef } from 'react';
 import Header from '../components/Header';
 import EnhancedUrlInput from '../components/EnhancedUrlInput';
 import ProcessingFeedback from '../components/ProcessingFeedback';
 import SummaryResult from '../components/SummaryResult';
 import HistoryList from '../components/HistoryList';
 import Footer from '../components/Footer';
-import AnimatedWaveform from '../components/AnimatedWaveform';
-import TimeSavedCounter from '../components/TimeSavedCounter';
 import { generateMockPodcastInfo, generateMockSummary, generateMockHistory } from '../utils/mockData';
 import { useToast } from "@/hooks/use-toast";
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -34,7 +33,7 @@ const Index = () => {
   
   const summaryRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Load mock history with preview texts
     const mockHistory = generateMockHistory();
     // Add preview text to history items
@@ -73,6 +72,10 @@ const Index = () => {
       const summary = generateMockSummary();
       setSummaryResult(summary);
       
+      // Extract YouTube ID if present
+      const youtubeMatch = submittedUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+      const videoId = youtubeMatch ? youtubeMatch[1] : undefined;
+      
       // Add to history
       const newHistoryItem = {
         id: Math.random().toString(36).substring(2, 9),
@@ -83,15 +86,22 @@ const Index = () => {
           day: 'numeric' 
         }),
         thumbnail: mockInfo.thumbnail,
-        previewText: summary.keyTakeaways[0].substring(0, 40) + "..."
+        previewText: summary.keyTakeaways[0].substring(0, 40) + "...",
+        videoId
       };
       
       setHistory(prev => [newHistoryItem, ...prev].slice(0, 10));
       
+      // Update podcastInfo with videoId
+      setPodcastInfo({
+        ...mockInfo,
+        videoId
+      });
+      
       // Success toast
       toast({
-        title: "Boom! Summary ready.",
-        description: "We've analyzed the podcast and created your summary.",
+        title: "Summary ready",
+        description: "Podcast has been analyzed and summarized.",
       });
       
       // Scroll to summary
@@ -154,14 +164,15 @@ const Index = () => {
       setPodcastInfo({
         title: historyItem.title,
         thumbnail: historyItem.thumbnail,
-        duration: "Retrieved from history"
+        duration: "Retrieved from history",
+        videoId: historyItem.videoId
       });
       setSummaryResult(generateMockSummary());
       
       // Show toast
       toast({
         title: "Summary Loaded",
-        description: "Loaded summary from your history.",
+        description: "Loaded from history.",
       });
       
       // Scroll to summary
@@ -188,7 +199,7 @@ const Index = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7 }}
               >
-                AI‑Powered Podcast Summarization
+                Podcast Summarization
               </motion.h1>
               <motion.p 
                 className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
@@ -196,14 +207,9 @@ const Index = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                Transform long podcasts into concise summaries with key insights and topic analysis.
+                Get concise summaries with key insights and topic breakdown.
               </motion.p>
-              
-              <TimeSavedCounter summaryCount={history.length} />
             </motion.div>
-            
-            {/* Animated waveform background */}
-            <AnimatedWaveform />
           </motion.div>
           
           <motion.div 
