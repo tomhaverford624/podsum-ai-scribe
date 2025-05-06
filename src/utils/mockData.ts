@@ -19,15 +19,28 @@ export const generateMockPodcastInfo = (url: string) => {
 
 export const generateMockSummary = () => {
   return {
-    executiveSummary: "In this insightful podcast episode, experts discuss the evolving landscape of cryptocurrency markets, focusing on institutional adoption and regulatory challenges. They analyze how recent market volatility has impacted investor sentiment while exploring long-term growth prospects in the DeFi sector. The conversation highlights key blockchain innovations that could reshape financial infrastructure and presents contrasting perspectives on the future of decentralized finance.",
-    
     keyTakeaways: [
-      "Institutional investors are increasingly allocating capital to cryptocurrencies despite market volatility, with a focus on Bitcoin and Ethereum as gateway assets.",
-      "Regulatory clarity remains the biggest hurdle for widespread adoption, with significant regional differences in approach creating operational challenges for global crypto businesses.",
-      "DeFi (Decentralized Finance) protocols are maturing beyond speculative use cases, with lending and yield-generating platforms showing sustainable business models.",
+      "**Institutional investors** are increasingly allocating capital to cryptocurrencies despite market volatility, with a focus on Bitcoin and Ethereum as gateway assets.",
+      "Regulatory clarity remains the **biggest hurdle** for widespread adoption, with significant regional differences in approach creating operational challenges for global crypto businesses.",
+      "DeFi (Decentralized Finance) protocols are maturing beyond speculative use cases, with lending and yield-generating platforms showing **sustainable business models**.",
       "Layer 2 scaling solutions are critical for Ethereum's continued dominance in the smart contract space, with several promising technologies gaining traction.",
       "Central Bank Digital Currencies (CBDCs) could potentially coexist with decentralized cryptocurrencies, serving different market needs and use cases.",
       "Security concerns persist with several high-profile hacks highlighting the importance of thorough auditing and gradual scaling of blockchain projects.",
+    ],
+    
+    topicSections: [
+      {
+        title: "On Scaling Ethereum Layer 1 and Blobs",
+        content: "Ethereum's scaling strategy focuses on two parallel tracks: optimizing Layer 1 throughput and expanding data availability for Layer 2s. Layer 1 improvements include increasing gas limits, refining execution and consensus client performance, and implementing Verkle trees to enable stateless clients. These changes aim to boost transaction capacity while maintaining decentralization. Blob scaling, driven by EIP-4844, prioritizes affordable block space for rollups, with plans to incrementally raise blob capacity from 3 to 16 per block. The long-term vision involves **ZK-powered advancements**, such as enshrined rollups and recursive proofs, to achieve exponential scalability."
+      },
+      {
+        title: "On Improving User Experience",
+        content: "UX improvements target both end-users and developers. For end-users, initiatives include wallet abstraction, cross-chain interoperability standards, and faster finality via single-slot consensus. Layer 2s are encouraged to adopt unified address formats and gas fee models to reduce fragmentation. Security remains a priority, with efforts to standardize audit processes and mitigate risks like reentrancy attacks. Developers will see enhanced tooling, including better **debugging frameworks** and standardized APIs for rollup integration."
+      },
+      {
+        title: "On Community Collaboration and Decentralized Governance",
+        content: "The EOF debate highlighted the need for inclusive decision-making. The EF plans to formalize processes for gathering input from Layer 2 teams, DeFi protocols, and staking services before EIP finalization. Research forums will invite external experts to critique proposals, ensuring upgrades align with ecosystem needs. **Decentralized governance tools**, such as onchain signaling mechanisms, are being explored to supplement All Core Devs discussions. However, the EF acknowledges the necessity of decisive leadership when consensus stalls, as seen with the Fusaku prioritization."
+      }
     ],
     
     timestampedChapters: [
