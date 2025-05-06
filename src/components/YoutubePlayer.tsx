@@ -14,7 +14,6 @@ const YoutubePlayer: React.FC<YoutubePlayerProps> = ({ videoId }) => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           className="absolute top-0 left-0 w-full h-full"
-          title="YouTube video player"
         />
       </div>
     </div>
