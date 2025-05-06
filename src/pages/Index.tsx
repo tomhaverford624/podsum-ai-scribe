@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from 'react';
 import Header from '../components/Header';
 import UrlInput from '../components/UrlInput';
@@ -7,6 +8,7 @@ import HistoryList from '../components/HistoryList';
 import Footer from '../components/Footer';
 import { generateMockPodcastInfo, generateMockSummary, generateMockHistory } from '../utils/mockData';
 import { useToast } from "@/hooks/use-toast";
+import { motion } from 'framer-motion';
 
 const Index = () => {
   const { toast } = useToast();
@@ -140,36 +142,57 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
       <Header />
       
-      <main className="flex-1 px-4 py-8">
+      <main className="flex-1 px-4 py-8 overflow-x-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-alea-blue to-blue-600">
               AI-Powered Podcast Summarization
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Transform long podcasts into concise summaries with key insights and timestamped chapters.
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Transform long podcasts into concise summaries with key insights and topic analysis.
             </p>
-          </div>
+          </motion.div>
           
-          <div className="flex justify-center mb-8">
+          <motion.div 
+            className="flex justify-center mb-8"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <UrlInput onSubmit={handleSubmit} isProcessing={isProcessing} />
-          </div>
+          </motion.div>
           
           {/* History section replacing Advanced Options */}
-          <div className="w-full max-w-2xl mx-auto mt-4 mb-8">
+          <motion.div 
+            className="w-full max-w-2xl mx-auto mt-4 mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             <HistoryList history={history} onSelect={handleSelectHistory} />
-          </div>
+          </motion.div>
           
           {isProcessing && podcastInfo && (
-            <ProcessingFeedback
-              podcastInfo={podcastInfo}
-              progress={processingProgress}
-              currentStep={processingStep}
-              onCancel={handleCancelProcessing}
-            />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <ProcessingFeedback
+                podcastInfo={podcastInfo}
+                progress={processingProgress}
+                currentStep={processingStep}
+                onCancel={handleCancelProcessing}
+              />
+            </motion.div>
           )}
           
           <div ref={summaryRef}>

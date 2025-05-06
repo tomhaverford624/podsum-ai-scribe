@@ -7,7 +7,6 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm">
         <div className="mb-4 md:mb-0 text-center md:text-left">
           <p className="text-gray-500 dark:text-gray-400">© {new Date().getFullYear()} Alea Research. All rights reserved.</p>
-          <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">We delete audio files after 24 hours.</p>
         </div>
         
         <div className="flex gap-6">
