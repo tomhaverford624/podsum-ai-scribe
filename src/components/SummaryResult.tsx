@@ -13,11 +13,16 @@ interface TopicSection {
 interface SummaryResultProps {
   keyTakeaways: string[];
   topicSections?: TopicSection[];
+  podcastInfo?: {
+    title: string;
+    thumbnail: string;
+  };
 }
 
 export const SummaryResult: React.FC<SummaryResultProps> = ({
   keyTakeaways,
   topicSections = [],
+  podcastInfo,
 }) => {
   return (
     <motion.div
@@ -26,6 +31,21 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
       transition={{ duration: 0.5 }}
     >
       <Card className="summary-card w-full max-w-3xl mx-auto mt-8 overflow-hidden border border-gray-100 dark:border-gray-800 shadow-lg hover:shadow-xl transition-all duration-300">
+        {podcastInfo && (
+          <div className="relative overflow-hidden w-full h-48 bg-gradient-to-r from-blue-500/10 to-purple-500/10">
+            <img 
+              src={podcastInfo.thumbnail} 
+              alt={podcastInfo.title}
+              className="w-full h-full object-cover opacity-90 hover:scale-105 transition-all duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+              <h2 className="text-xl md:text-2xl font-bold text-white p-6 line-clamp-2">
+                {podcastInfo.title}
+              </h2>
+            </div>
+          </div>
+        )}
+
         <CardHeader className="bg-gradient-to-r from-alea-blue/10 to-alea-blue/5 dark:from-alea-blue/20 dark:to-gray-900 border-b border-gray-100 dark:border-gray-800 py-5">
           <CardTitle className="text-xl text-alea-blue dark:text-blue-400 flex items-center gap-2">
             <BookOpen size={20} />

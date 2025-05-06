@@ -14,10 +14,6 @@ export const Footer: React.FC = () => {
           <a href="#" className="text-gray-500 hover:text-alea-blue dark:text-gray-400 dark:hover:text-blue-400 transition-colors text-sm">Terms</a>
           <a href="#" className="text-gray-500 hover:text-alea-blue dark:text-gray-400 dark:hover:text-blue-400 transition-colors text-sm">Feedback</a>
         </div>
-        
-        <div className="mt-4 md:mt-0 text-xs text-gray-400 dark:text-gray-500">
-          v1.0.0
-        </div>
       </div>
     </footer>
   );

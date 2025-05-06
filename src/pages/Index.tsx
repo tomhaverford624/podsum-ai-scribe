@@ -172,7 +172,7 @@ const Index = () => {
           
           {/* History section replacing Advanced Options */}
           <motion.div 
-            className="w-full max-w-2xl mx-auto mt-4 mb-8"
+            className="w-full max-w-5xl mx-auto mt-4 mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
@@ -200,6 +200,7 @@ const Index = () => {
               <SummaryResult
                 keyTakeaways={summaryResult.keyTakeaways}
                 topicSections={summaryResult.topicSections}
+                podcastInfo={podcastInfo}
               />
             )}
           </div>
