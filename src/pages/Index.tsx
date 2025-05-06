@@ -1,11 +1,9 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import Header from '../components/Header';
 import UrlInput from '../components/UrlInput';
 import ProcessingFeedback from '../components/ProcessingFeedback';
 import SummaryResult from '../components/SummaryResult';
-import AdvancedOptions from '../components/AdvancedOptions';
-import HistoryDrawer from '../components/HistoryDrawer';
+import HistoryList from '../components/HistoryList';
 import Footer from '../components/Footer';
 import { generateMockPodcastInfo, generateMockSummary, generateMockHistory } from '../utils/mockData';
 import { useToast } from "@/hooks/use-toast";
@@ -20,7 +18,7 @@ const Index = () => {
   const [summaryResult, setSummaryResult] = useState<any>(null);
   const [history, setHistory] = useState<any[]>([]);
   
-  // Advanced options
+  // Advanced options - keeping these in state even though the UI is removed
   const [summaryLength, setSummaryLength] = useState('medium');
   const [language, setLanguage] = useState('en');
   const [modelQuality, setModelQuality] = useState('standard');
@@ -78,7 +76,6 @@ const Index = () => {
       setTimeout(() => {
         summaryRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
-      
     } catch (error) {
       console.error('Error processing podcast:', error);
       toast({
@@ -159,19 +156,12 @@ const Index = () => {
           
           <div className="flex justify-center mb-8">
             <UrlInput onSubmit={handleSubmit} isProcessing={isProcessing} />
-            <div className="ml-2">
-              <HistoryDrawer history={history} onSelect={handleSelectHistory} />
-            </div>
           </div>
           
-          <AdvancedOptions
-            summaryLength={summaryLength}
-            onSummaryLengthChange={setSummaryLength}
-            language={language}
-            onLanguageChange={setLanguage}
-            modelQuality={modelQuality}
-            onModelQualityChange={setModelQuality}
-          />
+          {/* History section replacing Advanced Options */}
+          <div className="w-full max-w-2xl mx-auto mt-4 mb-8">
+            <HistoryList history={history} onSelect={handleSelectHistory} />
+          </div>
           
           {isProcessing && podcastInfo && (
             <ProcessingFeedback
