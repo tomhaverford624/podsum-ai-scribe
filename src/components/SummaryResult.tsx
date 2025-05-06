@@ -1,18 +1,11 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Separator } from './ui/separator';
 import { Copy, Download, Send, Share, ListCheck, BookOpen } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 import { motion } from 'framer-motion';
-
-interface TimestampedChapter {
-  timestamp: string;
-  title: string;
-  url: string;
-}
 
 interface TopicSection {
   title: string;
@@ -21,19 +14,14 @@ interface TopicSection {
 
 interface SummaryResultProps {
   keyTakeaways: string[];
-  timestampedChapters: TimestampedChapter[];
   topicSections?: TopicSection[];
-  fullTranscript?: string;
 }
 
 export const SummaryResult: React.FC<SummaryResultProps> = ({
   keyTakeaways,
-  timestampedChapters,
   topicSections = [],
-  fullTranscript,
 }) => {
   const { toast } = useToast();
-  const [isTranscriptOpen, setIsTranscriptOpen] = useState(false);
 
   const handleCopy = () => {
     const content = `
@@ -41,9 +29,6 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
 ${keyTakeaways.map(point => `• ${point}`).join('\n')}
 
 ${topicSections.map(section => `# ${section.title}\n${section.content}`).join('\n\n')}
-
-# Chapters
-${timestampedChapters.map(chapter => `- [${chapter.timestamp}] ${chapter.title}`).join('\n')}
     `;
     
     navigator.clipboard.writeText(content);
@@ -59,11 +44,6 @@ ${timestampedChapters.map(chapter => `- [${chapter.timestamp}] ${chapter.title}`
 ${keyTakeaways.map(point => `• ${point}`).join('\n')}
 
 ${topicSections.map(section => `# ${section.title}\n${section.content}`).join('\n\n')}
-
-# Chapters
-${timestampedChapters.map(chapter => `- [${chapter.timestamp}] ${chapter.title}`).join('\n')}
-
-${fullTranscript ? `# Full Transcript\n${fullTranscript}` : ''}
     `;
     
     const blob = new Blob([content], { type: 'text/markdown' });
@@ -138,55 +118,6 @@ ${fullTranscript ? `# Full Transcript\n${fullTranscript}` : ''}
                   </div>
                 ))}
               </div>
-            </>
-          )}
-
-          <Separator className="my-4" />
-          
-          <div>
-            <h3 className="font-medium text-lg mb-3 text-gray-800 dark:text-gray-200">Chapters</h3>
-            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-2">
-              <ul className="divide-y divide-gray-100 dark:divide-gray-700">
-                {timestampedChapters.map((chapter, index) => (
-                  <li key={index} className="py-2">
-                    <a 
-                      href={chapter.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex hover:bg-white dark:hover:bg-gray-800 p-2 rounded-md transition-colors w-full group"
-                    >
-                      <span className="font-mono text-alea-blue dark:text-blue-400 font-medium mr-3 bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded text-sm">{chapter.timestamp}</span>
-                      <span className="text-gray-700 dark:text-gray-300 group-hover:text-alea-blue dark:group-hover:text-blue-400 transition-colors">{chapter.title}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {fullTranscript && (
-            <>
-              <Separator className="my-4" />
-              
-              <Collapsible
-                open={isTranscriptOpen}
-                onOpenChange={setIsTranscriptOpen}
-                className="w-full"
-              >
-                <div className="flex items-center justify-between">
-                  <h3 className="font-medium text-lg text-gray-800 dark:text-gray-200">Full Transcript</h3>
-                  <CollapsibleTrigger asChild>
-                    <Button variant="ghost" size="sm" className="text-alea-blue dark:text-blue-400">
-                      {isTranscriptOpen ? "Hide Transcript" : "Show Transcript"}
-                    </Button>
-                  </CollapsibleTrigger>
-                </div>
-                <CollapsibleContent className="mt-3 transition-all duration-300">
-                  <div className="text-gray-700 dark:text-gray-300 whitespace-pre-line bg-gray-50 dark:bg-gray-800/50 p-4 rounded-md text-sm leading-relaxed max-h-96 overflow-y-auto">
-                    {fullTranscript}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
             </>
           )}
         </CardContent>

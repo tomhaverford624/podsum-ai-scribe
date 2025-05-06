@@ -176,9 +176,7 @@ const Index = () => {
             {!isProcessing && summaryResult && (
               <SummaryResult
                 keyTakeaways={summaryResult.keyTakeaways}
-                timestampedChapters={summaryResult.timestampedChapters}
                 topicSections={summaryResult.topicSections}
-                fullTranscript={summaryResult.fullTranscript}
               />
             )}
           </div>
