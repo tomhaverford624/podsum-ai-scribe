@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Separator } from './ui/separator';
-import { Copy, Download, Send, Share } from 'lucide-react';
+import { Copy, Download, Send, Share, ListCheck, BookOpen } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 import { motion } from 'framer-motion';
@@ -14,17 +14,22 @@ interface TimestampedChapter {
   url: string;
 }
 
+interface TopicSection {
+  title: string;
+  content: string;
+}
+
 interface SummaryResultProps {
-  executiveSummary: string;
   keyTakeaways: string[];
   timestampedChapters: TimestampedChapter[];
+  topicSections?: TopicSection[];
   fullTranscript?: string;
 }
 
 export const SummaryResult: React.FC<SummaryResultProps> = ({
-  executiveSummary,
   keyTakeaways,
   timestampedChapters,
+  topicSections = [],
   fullTranscript,
 }) => {
   const { toast } = useToast();
@@ -32,11 +37,10 @@ export const SummaryResult: React.FC<SummaryResultProps> = ({
 
   const handleCopy = () => {
     const content = `
-# Executive Summary
-${executiveSummary}
-
 # Key Takeaways
-${keyTakeaways.map(point => `- ${point}`).join('\n')}
+${keyTakeaways.map(point => `• ${point}`).join('\n')}
+
+${topicSections.map(section => `# ${section.title}\n${section.content}`).join('\n\n')}
 
 # Chapters
 ${timestampedChapters.map(chapter => `- [${chapter.timestamp}] ${chapter.title}`).join('\n')}
@@ -51,11 +55,10 @@ ${timestampedChapters.map(chapter => `- [${chapter.timestamp}] ${chapter.title}`
 
   const handleDownload = () => {
     const content = `
-# Executive Summary
-${executiveSummary}
-
 # Key Takeaways
-${keyTakeaways.map(point => `- ${point}`).join('\n')}
+${keyTakeaways.map(point => `• ${point}`).join('\n')}
+
+${topicSections.map(section => `# ${section.title}\n${section.content}`).join('\n\n')}
 
 # Chapters
 ${timestampedChapters.map(chapter => `- [${chapter.timestamp}] ${chapter.title}`).join('\n')}
@@ -100,25 +103,43 @@ ${fullTranscript ? `# Full Transcript\n${fullTranscript}` : ''}
         </CardHeader>
         <CardContent className="space-y-6 py-6">
           <div>
-            <h3 className="font-medium text-lg mb-3 text-gray-800 dark:text-gray-200">Executive Summary</h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{executiveSummary}</p>
-          </div>
-
-          <Separator className="my-4" />
-          
-          <div>
-            <h3 className="font-medium text-lg mb-3 text-gray-800 dark:text-gray-200">Key Takeaways</h3>
-            <ul className="space-y-3">
+            <h3 className="font-medium text-lg mb-3 text-gray-800 dark:text-gray-200 flex items-center">
+              <ListCheck size={18} className="mr-2 text-alea-blue dark:text-blue-400" />
+              Key Takeaways
+            </h3>
+            <ul className="space-y-4">
               {keyTakeaways.map((point, index) => (
-                <li key={index} className="flex">
-                  <span className="inline-flex items-center justify-center rounded-full bg-alea-blue/90 text-white w-6 h-6 text-xs mr-3 flex-shrink-0 mt-0.5">
-                    {index + 1}
-                  </span>
-                  <span className="text-gray-700 dark:text-gray-300">{point}</span>
+                <li key={index} className="pl-6 relative">
+                  <span className="absolute left-0 top-1 font-bold text-alea-blue dark:text-blue-400">•</span>
+                  <span 
+                    className="text-gray-700 dark:text-gray-300"
+                    dangerouslySetInnerHTML={{ __html: point.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
+                  />
                 </li>
               ))}
             </ul>
           </div>
+
+          {topicSections.length > 0 && (
+            <>
+              <Separator className="my-4" />
+              
+              <div className="space-y-6">
+                {topicSections.map((section, index) => (
+                  <div key={index}>
+                    <h3 className="font-medium text-lg mb-3 text-gray-800 dark:text-gray-200 flex items-center">
+                      <BookOpen size={18} className="mr-2 text-alea-blue dark:text-blue-400" />
+                      {section.title}
+                    </h3>
+                    <div 
+                      className="text-gray-700 dark:text-gray-300 leading-relaxed pl-6"
+                      dangerouslySetInnerHTML={{ __html: section.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
 
           <Separator className="my-4" />
           
