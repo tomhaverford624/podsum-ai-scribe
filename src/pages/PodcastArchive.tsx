@@ -17,7 +17,7 @@ interface PodcastItem {
 }
 
 const PodcastArchive = () => {
-  const [podcasts, setPodcasts] = useState<PodcastItem[]>(generateMockHistory(20));
+  const [podcasts, setPodcasts] = useState<PodcastItem[]>(generateMockHistory());
   const [filter, setFilter] = useState('all');
   
   const filteredPodcasts = filter === 'all' 
