@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
-import { Clock, Calendar, Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Clock, Calendar, Play, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
+import { Button } from './ui/button';
 
 interface HistoryItem {
   id: string;
@@ -44,6 +46,12 @@ const HistoryList: React.FC<HistoryListProps> = ({ history, onSelect }) => {
           <Clock size={20} className="mr-2 text-alea-blue" />
           Recent summaries
         </h3>
+        <Link to="/podcasts">
+          <Button variant="ghost" size="sm" className="flex items-center gap-1 text-alea-blue">
+            <span>See more</span>
+            <ArrowRight size={16} />
+          </Button>
+        </Link>
       </div>
       
       <Carousel
